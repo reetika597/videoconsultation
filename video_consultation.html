@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <!-- SweetAlert CDN -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body>
@@ -12,14 +14,34 @@
     <script src="https://resource.zegocloud.com/prebuilt/prebuiltToken.js"></script>
     <script src="https://zegocloud.github.io/zegocloud_prebuilt_webrtc/ZegoPrebuilt/index.umd.js"></script>
     <script>
+        // Function to handle time slot selection
+        function selectTimeSlot(timeSlot) {
+            // Generate SweetAlert notification with selected time slot
+            swal("Meeting Scheduled!", "Your meeting is scheduled for " + timeSlot, "success")
+                .then((value) => {
+                    // After user confirmation, open the video consultation link
+                    openVideoConsultation(timeSlot);
+                });
+        }
 
-        const TOKEN = generatePrebuiltToken(1272551668, "357efbb9afc9a7b3a343c7900507a8c4", 'room2', 'UserID-' + Math.random(), 'jack' + Math.random());
+        // Function to open the video consultation link
+        function openVideoConsultation(timeSlot) {
+            const TOKEN = generatePrebuiltToken(1272551668, "357efbb9afc9a7b3a343c7900507a8c4", 'room2', 'DoctorID-' + Math.random(), 'Doctor');
 
-        const zp = ZegoUIKitPrebuilt.create(TOKEN);
-        zp.joinRoom({
-            container: document.querySelector("#root"),
-        });
+            const zp = ZegoUIKitPrebuilt.create(TOKEN);
+            zp.joinRoom({
+                container: document.querySelector("#root"),
+            });
+        }
     </script>
+
+    <!-- Example time slot selection buttons -->
+    <button onclick="selectTimeSlot('9:00 AM')">9:00 AM</button>
+    <button onclick="selectTimeSlot('10:00 AM')">10:00 AM</button>
+    <button onclick="selectTimeSlot('11:00 AM')">11:00 AM</button>
+    <!-- Add more buttons for other time slots as needed -->
+
+    <div id="root"></div>
 </body>
 
 </html>
